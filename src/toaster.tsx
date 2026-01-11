@@ -69,6 +69,7 @@ export function Toaster({
   visibleToasts = toastDefaults.visibleToasts,
   icons,
   toastStyles,
+  variantStyles,
   containerStyle,
   richColors = toastDefaults.richColors,
   closeButton = toastDefaults.closeButton,
@@ -202,6 +203,7 @@ export function Toaster({
           closeButton={closeButton}
           icons={icons}
           defaultStyles={toastStyles}
+          variantStyles={variantStyles}
           defaultAnimation={mergedAnimation}
           onDismiss={handleDismiss}
           duration={duration}

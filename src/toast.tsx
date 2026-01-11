@@ -100,6 +100,7 @@ function ToastActions({
   cancel,
   toastColors,
   defaultStyles,
+  variantStyle,
   hapticFeedback,
 }: {
   toast: ToastT;
@@ -107,6 +108,7 @@ function ToastActions({
   cancel?: ToastT["cancel"];
   toastColors: ReturnType<typeof getToastColors>;
   defaultStyles?: ToastProps["defaultStyles"];
+  variantStyle?: ToastProps["defaultStyles"];
   hapticFeedback: boolean;
 }) {
   const handleActionPress = useCallback(() => {
@@ -125,6 +127,7 @@ function ToastActions({
     ...baseStyles.cancelButton,
     borderColor: toastColors.border,
     ...(defaultStyles?.cancelButton as ViewStyle),
+    ...(variantStyle?.cancelButton as ViewStyle),
     ...(toast.styles?.cancelButton as ViewStyle),
     ...(cancel?.style as ViewStyle),
   };
@@ -133,6 +136,7 @@ function ToastActions({
     ...baseStyles.cancelButtonText,
     color: toastColors.description,
     ...(defaultStyles?.cancelButtonText as TextStyle),
+    ...(variantStyle?.cancelButtonText as TextStyle),
     ...(toast.styles?.cancelButtonText as TextStyle),
     ...(cancel?.textStyle as TextStyle),
   };
@@ -141,6 +145,7 @@ function ToastActions({
     ...baseStyles.actionButton,
     backgroundColor: toastColors.foreground,
     ...(defaultStyles?.actionButton as ViewStyle),
+    ...(variantStyle?.actionButton as ViewStyle),
     ...(toast.styles?.actionButton as ViewStyle),
     ...(action?.style as ViewStyle),
   };
@@ -149,6 +154,7 @@ function ToastActions({
     ...baseStyles.actionButtonText,
     color: toastColors.background,
     ...(defaultStyles?.actionButtonText as TextStyle),
+    ...(variantStyle?.actionButtonText as TextStyle),
     ...(toast.styles?.actionButtonText as TextStyle),
     ...(action?.textStyle as TextStyle),
   };
@@ -189,6 +195,7 @@ export function Toast({
   closeButton,
   icons,
   defaultStyles,
+  variantStyles,
   defaultAnimation = ANIMATION_DEFAULTS,
   onDismiss,
   duration,
@@ -332,12 +339,16 @@ export function Toast({
     ],
   }));
 
+  // Get variant-specific styles if defined
+  const variantStyle = variantStyles?.[type];
+
   const containerStyle: ViewStyle = {
     ...baseStyles.container,
     backgroundColor: toastColors.background,
     borderColor: toastColors.border,
     marginBottom: gap,
     ...(defaultStyles?.container as ViewStyle),
+    ...(variantStyle?.container as ViewStyle),
     ...(toast.styles?.container as ViewStyle),
   };
 
@@ -345,6 +356,7 @@ export function Toast({
     ...baseStyles.content,
     ...(!hasIcon ? baseStyles.contentNoIcon : {}),
     ...(defaultStyles?.content as ViewStyle),
+    ...(variantStyle?.content as ViewStyle),
     ...(toast.styles?.content as ViewStyle),
   };
 
@@ -352,6 +364,7 @@ export function Toast({
     ...baseStyles.title,
     color: toastColors.foreground,
     ...(defaultStyles?.title as TextStyle),
+    ...(variantStyle?.title as TextStyle),
     ...(toast.styles?.title as TextStyle),
   };
 
@@ -359,12 +372,14 @@ export function Toast({
     ...baseStyles.description,
     color: toastColors.description,
     ...(defaultStyles?.description as TextStyle),
+    ...(variantStyle?.description as TextStyle),
     ...(toast.styles?.description as TextStyle),
   };
 
   const closeButtonStyle: ViewStyle = {
     ...baseStyles.closeButton,
     ...(defaultStyles?.closeButton as ViewStyle),
+    ...(variantStyle?.closeButton as ViewStyle),
     ...(toast.styles?.closeButton as ViewStyle),
   };
 
@@ -410,6 +425,7 @@ export function Toast({
           cancel={cancel}
           toastColors={toastColors}
           defaultStyles={defaultStyles}
+          variantStyle={variantStyle}
           hapticFeedback={hapticFeedback}
         />
 

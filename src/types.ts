@@ -85,6 +85,12 @@ export interface ToastStyles {
 }
 
 /**
+ * Per-variant style overrides
+ * All variants are optional - only override what you need
+ */
+export type VariantStyles = Partial<Record<ToastType, ToastStyles>>;
+
+/**
  * Animation configuration
  */
 export interface AnimationConfig {
@@ -239,6 +245,18 @@ export interface ToasterProps {
   toastStyles?: ToastStyles;
 
   /**
+   * Per-variant style overrides
+   * Override styles for specific toast types (success, error, warning, info, etc.)
+   * All variants are optional - only specify the ones you need
+   * @example
+   * variantStyles={{
+   *   success: { container: { borderLeftWidth: 4, borderLeftColor: 'green' } },
+   *   error: { title: { fontWeight: 'bold' } },
+   * }}
+   */
+  variantStyles?: VariantStyles;
+
+  /**
    * Custom container style
    */
   containerStyle?: StyleProp<ViewStyle>;
@@ -286,6 +304,7 @@ export interface ToastProps {
   closeButton: boolean;
   icons?: ToastIcons;
   defaultStyles?: ToastStyles;
+  variantStyles?: VariantStyles;
   defaultAnimation?: AnimationConfig;
   onDismiss: (toastId: string | number) => void;
   /** Default duration for auto-dismiss */

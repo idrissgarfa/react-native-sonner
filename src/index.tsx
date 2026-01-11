@@ -22,6 +22,7 @@ export type {
   ToastT,
   ToastType,
   UpdateToastOptions,
+  VariantStyles,
 } from "./types";
 
 export {

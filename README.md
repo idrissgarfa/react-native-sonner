@@ -197,7 +197,8 @@ toast('Hello', {
 | `closeButton` | `boolean` | `false` | Show close button |
 | `hapticFeedback` | `boolean` | `false` | Enable haptic feedback |
 | `icons` | `ToastIcons` | - | Custom icons |
-| `toastStyles` | `ToastStyles` | - | Default styles for toasts |
+| `toastStyles` | `ToastStyles` | - | Default styles for all toasts |
+| `variantStyles` | `VariantStyles` | - | Per-variant style overrides |
 | `containerStyle` | `ViewStyle` | - | Container style |
 | `animation` | `AnimationConfig` | - | Animation configuration |
 | `toasterId` | `string` | - | ID for multiple Toaster instances |
@@ -284,6 +285,37 @@ toast('Styled toast', {
 />
 ```
 
+### Per-Variant Styles
+
+Style specific toast variants differently:
+
+```tsx
+<Toaster
+  variantStyles={{
+    success: {
+      container: { borderLeftWidth: 4, borderLeftColor: '#22c55e' },
+      title: { fontWeight: '600' },
+    },
+    error: {
+      container: { borderLeftWidth: 4, borderLeftColor: '#ef4444' },
+    },
+    warning: {
+      container: { backgroundColor: '#fef3c7' },
+    },
+    info: {
+      title: { color: '#1e40af' },
+    },
+    // 'loading' and 'default' variants also available
+  }}
+/>
+```
+
+**Style priority (lowest to highest):**
+1. Base styles (theme defaults)
+2. `toastStyles` (applies to all toasts)
+3. `variantStyles[type]` (per-variant overrides)
+4. `toast.styles` (individual toast override)
+
 ### Available Style Keys
 
 - `container` - Toast container
@@ -368,6 +400,7 @@ import type {
   AnimationConfig,
   ToastStyles,
   ToastIcons,
+  VariantStyles,
 } from 'react-native-sonner';
 ```
 

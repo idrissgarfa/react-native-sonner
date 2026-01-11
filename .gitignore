@@ -87,3 +87,6 @@ nitrogen/
 
 # Claude Code
 .claude/
+
+# npm
+.npmrc
