@@ -60,13 +60,14 @@ export interface PromiseData<T = unknown> {
 
 /**
  * Custom icons for toast types
+ * Set to `false` to hide the icon for a specific type
  */
 export interface ToastIcons {
-  success?: ReactNode;
-  error?: ReactNode;
-  warning?: ReactNode;
-  info?: ReactNode;
-  loading?: ReactNode;
+  success?: ReactNode | false;
+  error?: ReactNode | false;
+  warning?: ReactNode | false;
+  info?: ReactNode | false;
+  loading?: ReactNode | false;
 }
 
 /**

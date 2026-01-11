@@ -75,15 +75,18 @@ function ToastIcon({
   type: ToastType;
   iconColor: string;
 }) {
-  if (icon) {
-    return <View style={baseStyles.iconContainer}>{icon}</View>;
-  }
-
   if (icons && type in icons) {
     const customIcon = icons[type as keyof ToastIcons];
+    if (customIcon === false) {
+      return null;
+    }
     if (customIcon) {
       return <View style={baseStyles.iconContainer}>{customIcon}</View>;
     }
+  }
+
+  if (icon) {
+    return <View style={baseStyles.iconContainer}>{icon}</View>;
   }
 
   const defaultIcon = getIcon(type, iconColor);
@@ -226,13 +229,15 @@ export function Toast({
   const { type, title, description, action, cancel, icon, dismissible = true } = toast;
   const toastColors = getToastColors(type, theme, richColors);
 
-  const hasCustomIcon = Boolean(icon) || Boolean(icons?.[type as keyof ToastIcons]);
+  const iconConfig = icons?.[type as keyof ToastIcons];
+  const isIconHidden = iconConfig === false;
+  const hasCustomIcon = Boolean(icon) || (Boolean(iconConfig) && iconConfig !== false);
   const iconColor = useMemo(() => {
-    if (hasCustomIcon || type === "default") return "";
+    if (isIconHidden || hasCustomIcon || type === "default") return "";
     return getIconColor(type, theme, richColors);
-  }, [hasCustomIcon, type, theme, richColors]);
+  }, [isIconHidden, hasCustomIcon, type, theme, richColors]);
 
-  const hasIcon = hasCustomIcon || type !== "default";
+  const hasIcon = !isIconHidden && (hasCustomIcon || type !== "default");
 
   useEffect(() => {
     if (animation.useSpring) {
@@ -339,7 +344,6 @@ export function Toast({
     ],
   }));
 
-  // Get variant-specific styles if defined
   const variantStyle = variantStyles?.[type];
 
   const containerStyle: ViewStyle = {
